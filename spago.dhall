@@ -2,7 +2,8 @@
 , license = "BSD-3-Clause"
 , repository = "https://github.com/jstoxrocky/purescript-liminal"
 , dependencies = 
-    [ "console"
+    [ "aff"
+    , "spec"
     , "effect"
     , "prelude"
     , "transformation-matrix"
