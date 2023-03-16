@@ -6,6 +6,7 @@ import Data.Foldable (class Foldable, foldr, foldl, foldMap)
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 import Data.Array.NonEmpty (NonEmptyArray, cons')
+import Classes.HasUuid (class HasUuid, (===))
 
 data Vector8 a = Vector8 a a a a a a a a
 
@@ -81,3 +82,10 @@ replaceInVector8 v8@(Vector8 x1 x2 x3 x4 x5 x6 x7 x8) pred x = result
     else if pred x8 then Vector8 x1 x2 x3 x4 x5 x6 x7 x
     else v8
 
+replaceInVector8ByUuid
+  :: forall a
+  . HasUuid a
+  => Vector8 a
+  -> a
+  -> Vector8 a
+replaceInVector8ByUuid v8 x = replaceInVector8 v8 ((===) x) x
