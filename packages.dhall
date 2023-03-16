@@ -118,5 +118,5 @@ with transformation-matrix =
     , repo = 
         "https://github.com/jstoxrocky/purescript-transformation-matrix"
     , version = 
-        "main"
+        "v1.0.1"
     }
