@@ -1,4 +1,4 @@
-module Classes.HasUuid where
+module Liminal.Class.HasUuid where
 
 import Prelude
 import Data.Array (filter)
@@ -8,7 +8,7 @@ class HasUuid m where
   setUuid :: Int -> m -> m
 
 matchObjectsOnId :: forall a b. HasUuid a => HasUuid b => a -> b -> Boolean
-matchObjectsOnId obj obj' = getUuid obj == getUuid obj'
+matchObjectsOnId obj1 obj2 = getUuid obj1 == getUuid obj2
 
 notMatchObjectsOnId :: forall a b. HasUuid a => HasUuid b => a -> b -> Boolean
 notMatchObjectsOnId = not <<< matchObjectsOnId
@@ -16,6 +16,9 @@ notMatchObjectsOnId = not <<< matchObjectsOnId
 infix 4 matchObjectsOnId as ===
 
 infix 4 notMatchObjectsOnId as !==
+
+compareUuid :: forall a b. HasUuid a => HasUuid b => a -> b -> Ordering
+compareUuid a b = compare (getUuid a) (getUuid b)
 
 replaceInArray
   :: forall a f
@@ -25,9 +28,6 @@ replaceInArray
   -> f a
   -> f a
 replaceInArray replacement objs = (\obj -> if replacement === obj then replacement else obj) <$> objs
-
-compareUuid :: forall a b. HasUuid a => HasUuid b => a -> b -> Ordering
-compareUuid a b = compare (getUuid a) (getUuid b)
 
 removeFromArray
   :: forall a

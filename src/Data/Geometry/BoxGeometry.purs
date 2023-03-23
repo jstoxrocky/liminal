@@ -1,11 +1,13 @@
-module Data.Geometry.BoxGeometry where
+module Liminal.Data.BoxGeometry where
 
 import Prelude
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
-import Data.Vector.Vector8 (Vector8(..))
-import Data.TransformationMatrix.Vector3 (Vector3(..))
-import Data.Geometry.BoundingBox (BoundingBox(..))
+import Liminal.Data.Vector8 (Vector8(..))
+import TransformationMatrix.Data.Vector3 (Vector3(..))
+import Liminal.Data.BoundingBox (BoundingBox(..))
+import Liminal.Class.HasVertices (class HasVertices)
+import Liminal.Class.HasBoundingBox (class HasBoundingBox)
 
 newtype BoxGeometry = BoxGeometry { xspan :: Number, yspan :: Number, zspan :: Number }
 
@@ -18,8 +20,11 @@ derive instance eqBoxGeometry :: Eq BoxGeometry
 
 derive instance ordBoxGeometry :: Ord BoxGeometry
 
-boxGeometry :: { length :: Number, width :: Number, thickness :: Number } -> BoxGeometry
-boxGeometry { length, width, thickness } = BoxGeometry { xspan: width, yspan: length, zspan: thickness }
+instance hasVerticesBoxGeometry :: HasVertices BoxGeometry Vector8 where
+  getVertices geometry = calculateVertices geometry (Vector3 0.0 0.0 0.0)
+
+instance hasBoundingBoxBoxGeometry :: HasBoundingBox BoxGeometry where
+  getBoundingBox geometry = calculateBoundingBox geometry (Vector3 0.0 0.0 0.0)
 
 calculateVertices
   :: BoxGeometry

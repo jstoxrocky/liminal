@@ -10,6 +10,7 @@
   "scripts": {
     "build": "npx spago build",
     "docs": "npx spago docs",
-    "test": "npx spago test"
+    "test": "npx spago test",
+    "clean": "rm -rf output/"
   }
 }

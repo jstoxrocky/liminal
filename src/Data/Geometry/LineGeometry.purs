@@ -1,10 +1,13 @@
-module Data.Geometry.LineGeometry where
+module Liminal.Data.LineGeometry where
 
 import Prelude
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
-import Data.TransformationMatrix.Vector3 (Vector3(..))
-import Data.TransformationMatrix.Vector2 (Vector2(..))
+import TransformationMatrix.Data.Vector3 (Vector3(..))
+import TransformationMatrix.Data.Vector2 (Vector2(..))
+import Liminal.Data.BoundingBox (BoundingBox(..))
+import Liminal.Class.HasVertices (class HasVertices)
+import Liminal.Class.HasBoundingBox (class HasBoundingBox)
 
 newtype LineGeometry = LineGeometry { yspan :: Number }
 
@@ -17,8 +20,11 @@ derive instance eqLineGeometry :: Eq LineGeometry
 
 derive instance ordLineGeometry :: Ord LineGeometry
 
-lineGeometry :: Number -> LineGeometry
-lineGeometry length = LineGeometry { yspan: length }
+instance hasVerticesBoxGeometry :: HasVertices LineGeometry Vector2 where
+  getVertices geometry = calculateVertices geometry (Vector3 0.0 0.0 0.0)
+
+instance hasBoundingBoxBoxGeometry :: HasBoundingBox LineGeometry where
+  getBoundingBox geometry = calculateBoundingBox geometry (Vector3 0.0 0.0 0.0)
 
 -- This implementation is dependent on how threejs creates a LineGeometry(y-span)
 -- There is no "lateral depth" or "forward back depth" in the x and z-dimensions on creation. We create the positions of the
@@ -34,3 +40,13 @@ calculateVertices (LineGeometry { yspan }) (Vector3 x y z) = vertices
   vertices = Vector2
     (Vector3 x (y + halfYspan) z)
     (Vector3 x (y - halfYspan) z)
+
+calculateBoundingBox
+  :: LineGeometry
+  -> Vector3 Number
+  -> BoundingBox
+calculateBoundingBox (LineGeometry { yspan }) (Vector3 x y z) = BoundingBox min max
+  where
+  halfYspan = yspan / 2.0
+  min = Vector3 x (y - halfYspan) z
+  max = Vector3 x (y + halfYspan) z

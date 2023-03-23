@@ -1,7 +1,7 @@
-module Data.Geometry.Ray where
+module Liminal.Data.Ray where
 
 import Prelude
-import Data.TransformationMatrix.Vector3 (Vector3)
+import TransformationMatrix.Data.Vector3 (Vector3)
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 
