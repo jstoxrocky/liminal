@@ -3,13 +3,17 @@
 , repository = "https://github.com/jstoxrocky/purescript-liminal"
 , dependencies = 
     [ "aff"
-    , "spec"
-    , "effect"
-    , "prelude"
-    , "transformation-matrix"
     , "arrays"
+    , "effect"
+    , "either"
     , "foldable-traversable"
-    , "maybe" ]
+    , "maybe"
+    , "numbers"
+    , "prelude"
+    , "spec"
+    , "transformation-matrix"
+    , "transformers"
+    , "tuples" ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
 }

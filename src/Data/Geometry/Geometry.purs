@@ -1,13 +1,13 @@
-module Data.Geometry.Geometry where
+module Liminal.Data.Geometry where
 
 import Prelude
 
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
-import Data.Geometry.BoxGeometry (BoxGeometry)
-import Data.Geometry.LineGeometry (LineGeometry)
-import Data.Geometry.PlaneGeometry (PlaneGeometry)
-import Data.Geometry.SphereGeometry (SphereGeometry)
+import Liminal.Data.BoxGeometry (BoxGeometry)
+import Liminal.Data.LineGeometry (LineGeometry)
+import Liminal.Data.PlaneGeometry (PlaneGeometry)
+import Liminal.Data.SphereGeometry (SphereGeometry)
 
 data Geometry
   = GeometryBox BoxGeometry

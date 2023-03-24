@@ -1,9 +1,9 @@
-module Classes.HasVertices where
+module Liminal.Class.HasVertices where
 
 import Prelude
-import Data.TransformationMatrix.Vector3 (Vector3)
-import Data.TransformationMatrix.Matrix4 (Matrix4, setPosition)
-import Classes.HasMatrix (class HasMatrix, getMatrix)
+import TransformationMatrix.Data.Vector3 (Vector3)
+import TransformationMatrix.Data.Matrix4 (Matrix4, setPosition)
+import Liminal.Class.HasMatrix (class HasMatrix, getMatrix)
 
 class HasVertices m t | m -> t where
   getVertices :: m -> t (Vector3 Number)

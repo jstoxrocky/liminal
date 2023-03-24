@@ -1,6 +1,6 @@
-module Classes.HasInverse where
+module Liminal.Class.HasInverse where
 
-import Data.TransformationMatrix.Matrix4 (Matrix4)
+import TransformationMatrix.Data.Matrix4 (Matrix4)
 
 class HasInverse m where
   getInverse :: m -> Matrix4

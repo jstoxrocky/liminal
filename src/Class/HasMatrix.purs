@@ -1,7 +1,7 @@
-module Classes.HasMatrix where
+module Liminal.Class.HasMatrix where
 
-import Data.TransformationMatrix.Matrix4 (Matrix4)
-import Data.TransformationMatrix.Vector3 (Vector3, subtract)
+import TransformationMatrix.Data.Matrix4 (Matrix4)
+import TransformationMatrix.Data.Vector3 (Vector3, subtract)
 
 class HasMatrix m where
   getMatrix :: m -> Matrix4
