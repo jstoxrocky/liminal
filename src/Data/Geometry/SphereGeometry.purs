@@ -8,6 +8,8 @@ import Liminal.Data.Vector1 (Vector1(..))
 import Liminal.Data.BoundingBox (BoundingBox(..))
 import Liminal.Class.HasVertices (class HasVertices)
 import Liminal.Class.HasBoundingBox (class HasBoundingBox)
+import Liminal.Updates.Data.Geometry as Geometry
+import Liminal.Updates.Class.SerializeGeometry (class SerializeGeometry)
 
 newtype SphereGeometry = SphereGeometry { radius :: Number }
 
@@ -25,6 +27,9 @@ instance hasVerticesBoxGeometry :: HasVertices SphereGeometry Vector1 where
 
 instance hasBoundingBoxBoxGeometry :: HasBoundingBox SphereGeometry where
   getBoundingBox geometry = calculateBoundingBox geometry (Vector3 0.0 0.0 0.0)
+
+instance serializeGeometrySphereGeometry :: SerializeGeometry SphereGeometry where
+  serializeGeometry (SphereGeometry attrs) = Geometry.SphereGeometry attrs
 
 calculateVertices
   :: SphereGeometry

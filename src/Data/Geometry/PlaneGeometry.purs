@@ -8,6 +8,8 @@ import Liminal.Data.Vector4 (Vector4(..))
 import Liminal.Data.BoundingBox (BoundingBox(..))
 import Liminal.Class.HasVertices (class HasVertices)
 import Liminal.Class.HasBoundingBox (class HasBoundingBox)
+import Liminal.Updates.Data.Geometry as Geometry
+import Liminal.Updates.Class.SerializeGeometry (class SerializeGeometry)
 
 newtype PlaneGeometry = PlaneGeometry { xspan :: Number, yspan :: Number }
 
@@ -25,6 +27,9 @@ instance hasVerticesBoxGeometry :: HasVertices PlaneGeometry Vector4 where
 
 instance hasBoundingBoxBoxGeometry :: HasBoundingBox PlaneGeometry where
   getBoundingBox geometry = calculateBoundingBox geometry (Vector3 0.0 0.0 0.0)
+
+instance serializeGeometryPlaneGeometry :: SerializeGeometry PlaneGeometry where
+  serializeGeometry (PlaneGeometry attrs) = Geometry.PlaneGeometry attrs
 
 -- This implementation is dependent on how threejs creates a PlaneGeometry(x-span, y-span)
 -- There is no "depth" in the z-dimension on creation. We create the positions of the

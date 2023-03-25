@@ -12,17 +12,15 @@ import Control.Monad.Maybe.Trans (runMaybeT)
 import Data.Tuple (Tuple(..))
 import Liminal.Data.Mesh (Mesh(..))
 import Liminal.Data.BoxGeometry (BoxGeometry(..))
-import Liminal.Data.Material (emptyMaterial)
 import TransformationMatrix.Data.Matrix4 (Matrix4(..), identity4)
 import Liminal.Data.PerspectiveCamera (PerspectiveCamera(..))
 import Liminal.Transformation.Services.Translate (moveObjectTo)
 import Liminal.Class.HasUuid (setUuid)
 
 dummyMesh :: Mesh BoxGeometry
-dummyMesh = Mesh { geometry, material, uuid, matrix, inverseMatrix } where
+dummyMesh = Mesh { geometry, uuid, matrix, inverseMatrix } where
   uuid = 1
   geometry = BoxGeometry { yspan: 8.0, xspan: 3.5, zspan: 1.5 }
-  material = emptyMaterial
   matrix = identity4
   inverseMatrix = identity4
 

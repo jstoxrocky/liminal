@@ -1,8 +1,8 @@
-module Liminal.Data.Material where
+module Liminal.Data.MaterialUpdater where
 
 import Data.Maybe (Maybe(..))
 
-type Material =
+type MaterialUpdater =
   { transparent :: Maybe Boolean
   , opacity :: Maybe Number
   , color :: Maybe Int
@@ -12,8 +12,8 @@ type Material =
   , visible :: Maybe Boolean
   }
 
-emptyMaterial :: Material
-emptyMaterial = 
+emptyMaterialUpdater :: MaterialUpdater
+emptyMaterialUpdater = 
   { transparent: Nothing
   , opacity: Nothing
   , color: Nothing

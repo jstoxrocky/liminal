@@ -14,16 +14,14 @@ import Data.Maybe (Maybe(..))
 import Data.Array (sort)
 import Liminal.Data.Mesh (Mesh(..))
 import Liminal.Data.SphereGeometry (SphereGeometry(..))
-import Liminal.Data.Material (emptyMaterial)
 import Liminal.Data.PerspectiveCamera (PerspectiveCamera(..))
 import Liminal.Transformation.Services.Translate (moveObjectTo)
 import Liminal.Class.HasUuid (setUuid)
 
 dummyMesh :: Mesh SphereGeometry
-dummyMesh = Mesh { geometry, material, uuid, matrix, inverseMatrix } where
+dummyMesh = Mesh { geometry, uuid, matrix, inverseMatrix } where
   uuid = 1
   geometry = SphereGeometry { radius: 0.1 }
-  material = emptyMaterial
   matrix = identity4
   inverseMatrix = identity4
 
