@@ -10,7 +10,6 @@ import Data.Tuple (Tuple(..))
 import TransformationMatrix.Data.Matrix4 (identity4)
 import Liminal.Data.Mesh (Mesh(..))
 import Liminal.Data.BoxGeometry (BoxGeometry(..))
-import Data.Maybe (Maybe(..))
 import Liminal.Transformation.Services.Scale (scaleObject, scaleObjectNoInverseUpdate)
 
 scaleSpec :: Spec Unit
@@ -23,16 +22,7 @@ scaleSpec = do
         matrix = identity4
         inverseMatrix = identity4
         geometry = BoxGeometry { xspan: 1.0, yspan: 1.0, zspan: 1.0 }
-        material =
-          { transparent: Nothing
-          , opacity: Nothing
-          , color: Nothing
-          , emissiveColor: Nothing
-          , emissiveIntensity: Nothing
-          , needsUpdate: Nothing
-          , visible: Nothing
-          }
-        mesh = Mesh { geometry, material, uuid, matrix, inverseMatrix }
+        mesh = Mesh { geometry, uuid, matrix, inverseMatrix }
         multiplier = 1.5
 
         -- Expectations

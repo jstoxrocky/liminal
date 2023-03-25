@@ -8,6 +8,8 @@ import TransformationMatrix.Data.Vector3 (Vector3(..))
 import Liminal.Data.BoundingBox (BoundingBox(..))
 import Liminal.Class.HasVertices (class HasVertices)
 import Liminal.Class.HasBoundingBox (class HasBoundingBox)
+import Liminal.Updates.Data.Geometry as Geometry
+import Liminal.Updates.Class.SerializeGeometry (class SerializeGeometry)
 
 newtype BoxGeometry = BoxGeometry { xspan :: Number, yspan :: Number, zspan :: Number }
 
@@ -25,6 +27,9 @@ instance hasVerticesBoxGeometry :: HasVertices BoxGeometry Vector8 where
 
 instance hasBoundingBoxBoxGeometry :: HasBoundingBox BoxGeometry where
   getBoundingBox geometry = calculateBoundingBox geometry (Vector3 0.0 0.0 0.0)
+
+instance serializeGeometryBoxGeometry :: SerializeGeometry BoxGeometry where
+  serializeGeometry (BoxGeometry attrs) = Geometry.BoxGeometry attrs
 
 calculateVertices
   :: BoxGeometry
@@ -56,3 +61,4 @@ calculateBoundingBox (BoxGeometry { xspan, yspan, zspan }) (Vector3 x y z) = Bou
   halfZspan = zspan / 2.0
   min = Vector3 (x - halfXspan) (y - halfYspan) (z - halfZspan)
   max = Vector3 (x + halfXspan) (y + halfYspan) (z + halfZspan)
+

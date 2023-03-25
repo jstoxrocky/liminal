@@ -1,7 +1,6 @@
 module Liminal.Data.Mesh where
 
 import Prelude hiding (add)
-import Liminal.Data.Material (Material)
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 import Liminal.Class.HasUuid (class HasUuid, compareUuid)
@@ -16,7 +15,6 @@ import Liminal.Data.BoundingBox (BoundingBox(..))
 
 data Mesh a = Mesh 
   { geometry :: a
-  , material :: Material
   , uuid :: Int
   , matrix :: Matrix4
   , inverseMatrix :: Matrix4 }

@@ -12,7 +12,6 @@ import Liminal.Transformation.Services.Rotate (rotateObject, rotateNoInverseUpda
 import TransformationMatrix.Data.Matrix4 (identity4)
 import Liminal.Data.Mesh (Mesh(..))
 import Liminal.Data.BoxGeometry (BoxGeometry(..))
-import Data.Maybe (Maybe(..))
 
 rotateSpec :: Spec Unit
 rotateSpec = do
@@ -24,16 +23,7 @@ rotateSpec = do
         matrix = identity4
         inverseMatrix = identity4
         geometry = BoxGeometry { xspan: 1.0, yspan: 1.0, zspan: 1.0 }
-        material =
-          { transparent: Nothing
-          , opacity: Nothing
-          , color: Nothing
-          , emissiveColor: Nothing
-          , emissiveIntensity: Nothing
-          , needsUpdate: Nothing
-          , visible: Nothing
-          }
-        mesh = Mesh { geometry, material, uuid, matrix, inverseMatrix }
+        mesh = Mesh { geometry, uuid, matrix, inverseMatrix }
         theta = 45.0
         axis = Yaxis (X 0.0) (Z 0.0)
 

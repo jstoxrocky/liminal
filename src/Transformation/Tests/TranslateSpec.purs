@@ -10,7 +10,6 @@ import Liminal.Transformation.Services.Invert (updateInverseMatrixAfterTranslati
 import TransformationMatrix.Data.Matrix4 (identity4)
 import Liminal.Data.Mesh (Mesh(..))
 import Liminal.Data.BoxGeometry (BoxGeometry(..))
-import Data.Maybe (Maybe(..))
 import Liminal.Transformation.Services.Translate (moveObjectTo, translateObject)
 
 translateSpec :: Spec Unit
@@ -23,16 +22,7 @@ translateSpec = do
         matrix = identity4
         inverseMatrix = identity4
         geometry = BoxGeometry { xspan: 1.0, yspan: 1.0, zspan: 1.0 }
-        material =
-          { transparent: Nothing
-          , opacity: Nothing
-          , color: Nothing
-          , emissiveColor: Nothing
-          , emissiveIntensity: Nothing
-          , needsUpdate: Nothing
-          , visible: Nothing
-          }
-        mesh = Mesh { geometry, material, uuid, matrix, inverseMatrix }
+        mesh = Mesh { geometry, uuid, matrix, inverseMatrix }
         position = Vector3 1.0 2.0 3.0
 
         -- Expectations
@@ -51,16 +41,7 @@ translateSpec = do
         matrix = identity4
         inverseMatrix = identity4
         geometry = BoxGeometry { xspan: 1.0, yspan: 1.0, zspan: 1.0 }
-        material =
-          { transparent: Nothing
-          , opacity: Nothing
-          , color: Nothing
-          , emissiveColor: Nothing
-          , emissiveIntensity: Nothing
-          , needsUpdate: Nothing
-          , visible: Nothing
-          }
-        mesh = Mesh { geometry, material, uuid, matrix, inverseMatrix }
+        mesh = Mesh { geometry, uuid, matrix, inverseMatrix }
         translation = Vector3 1.0 2.0 3.0
 
         -- Expectations

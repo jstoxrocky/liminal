@@ -8,6 +8,8 @@ import TransformationMatrix.Data.Vector2 (Vector2(..))
 import Liminal.Data.BoundingBox (BoundingBox(..))
 import Liminal.Class.HasVertices (class HasVertices)
 import Liminal.Class.HasBoundingBox (class HasBoundingBox)
+import Liminal.Updates.Data.Geometry as Geometry
+import Liminal.Updates.Class.SerializeGeometry (class SerializeGeometry)
 
 newtype LineGeometry = LineGeometry { yspan :: Number }
 
@@ -25,6 +27,9 @@ instance hasVerticesBoxGeometry :: HasVertices LineGeometry Vector2 where
 
 instance hasBoundingBoxBoxGeometry :: HasBoundingBox LineGeometry where
   getBoundingBox geometry = calculateBoundingBox geometry (Vector3 0.0 0.0 0.0)
+
+instance serializeGeometryLineGeometry :: SerializeGeometry LineGeometry where
+  serializeGeometry (LineGeometry attrs) = Geometry.LineGeometry attrs
 
 -- This implementation is dependent on how threejs creates a LineGeometry(y-span)
 -- There is no "lateral depth" or "forward back depth" in the x and z-dimensions on creation. We create the positions of the
