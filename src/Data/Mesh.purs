@@ -8,10 +8,8 @@ import Liminal.Class.HasMatrix (class HasMatrix)
 import TransformationMatrix.Data.Matrix4 (Matrix4, getPosition, setPosition)
 import Liminal.Class.HasInverse (class HasInverse)
 import Liminal.Class.HasGeometry (class HasGeometry)
-import Liminal.Class.HasVertices (class HasVertices, getVertices)
-import TransformationMatrix.Data.Vector3 (add)
-import Liminal.Class.HasBoundingBox (class HasBoundingBox, getBoundingBox)
-import Liminal.Data.BoundingBox (BoundingBox(..))
+import Liminal.Class.HasAxisAlignedVertices (class HasAxisAlignedVertices, getAxisAlignedVertices)
+import Liminal.Class.HasAxisAlignedBoundingBox (class HasAxisAlignedBoundingBox, getAxisAlignedBoundingBox)
 
 data Mesh a = Mesh 
   { geometry :: a
@@ -46,9 +44,8 @@ instance hasInverseMesh :: HasInverse (Mesh a) where
 instance hasGeometryMesh :: HasGeometry (Mesh a) a where
   getGeometry (Mesh { geometry }) = geometry
 
-instance hasVerticesMesh :: (Functor b, HasVertices a b) => HasVertices (Mesh a) b where
-  getVertices (Mesh { matrix, geometry }) = (add (getPosition matrix)) <$> getVertices geometry
+instance hasAxisAlignedVerticesMesh :: (Functor b, HasAxisAlignedVertices a b) => HasAxisAlignedVertices (Mesh a) b where
+  getAxisAlignedVertices (Mesh { geometry }) = getAxisAlignedVertices geometry
 
-instance hasBoundingBoxMesh :: HasBoundingBox a => HasBoundingBox (Mesh a) where
-  getBoundingBox (Mesh { geometry, matrix }) = case getBoundingBox geometry of
-    BoundingBox v1 v2 -> BoundingBox (add v1 (getPosition matrix)) (add v2 (getPosition matrix))
+instance hasAxisAlignedBoundingBoxMesh :: HasAxisAlignedBoundingBox a => HasAxisAlignedBoundingBox (Mesh a) where
+  getAxisAlignedBoundingBox (Mesh { geometry }) = getAxisAlignedBoundingBox geometry

@@ -13,11 +13,12 @@ import Data.Traversable (traverse, class Traversable)
 import Data.Tuple (Tuple(..))
 import TransformationMatrix.Services.Division (divide)
 import TransformationMatrix.Data.DivisionError (DivisionError)
-import Liminal.Data.BoundingBox (BoundingBox(..))
-import Liminal.Data.Ray (Ray(..))
-import Liminal.Class.HasBoundingBox (class HasBoundingBox, getBoundingBox)
+import Liminal.Data.AxisAlignedBoundingBox (AxisAlignedBoundingBox(..))
+import Liminal.Data.Ray (Ray(..), applyMatrix4ToRay)
+import Liminal.Class.HasAxisAlignedBoundingBox (class HasAxisAlignedBoundingBox, getAxisAlignedBoundingBox)
 import Liminal.Class.HasInverseProjection (class HasInverseProjection)
 import Liminal.Class.HasMatrix (class HasMatrix, getPosition)
+import Liminal.Class.HasInverse (class HasInverse, getInverse)
 import Liminal.Class.HasProjection (class HasProjection)
 import TransformationMatrix.Data.Vector2 (Vector2(..))
 import TransformationMatrix.Data.Vector3 (Vector3(..), subtract, normalize)
@@ -72,18 +73,20 @@ solveForT direction boundingBoxMin boundingBoxMax origin = do
 -- So, I don't think this function throwing too many DivisionErrors is anything to worry about.
 calculateRaycastIntersection
   :: forall a
-   . HasBoundingBox a
+  . HasInverse a
+  => HasAxisAlignedBoundingBox a
   => Ray
   -> a
   -> MaybeT (Either DivisionError) (IntersectionRaycast a)
 calculateRaycastIntersection ray object = do
+  axisAlignedRay <- MaybeT $ Just <$> applyMatrix4ToRay (getInverse object) ray
   let
-    Ray origin direction = ray
+    Ray origin direction = axisAlignedRay
     Vector3 originX originY originZ = origin
     Vector3 directionX directionY directionZ = direction
-    BoundingBox
+    AxisAlignedBoundingBox
       (Vector3 boundingBoxMinX boundingBoxMinY boundingBoxMinZ)
-      (Vector3 boundingBoxMaxX boundingBoxMaxY boundingBoxMaxZ) = getBoundingBox object
+      (Vector3 boundingBoxMaxX boundingBoxMaxY boundingBoxMaxZ) = getAxisAlignedBoundingBox object
 
   -- #1
   Tuple txmin txmax <- MaybeT $ Just <$> solveForT directionX boundingBoxMinX boundingBoxMaxX originX
@@ -122,7 +125,8 @@ calculateRaycastIntersection ray object = do
 
 intersectRaycast
   :: forall a
-   . HasBoundingBox a
+  . HasInverse a
+  => HasAxisAlignedBoundingBox a
   => Ray
   -> a
   -> Either DivisionError (Maybe (IntersectionRaycast a))
@@ -130,7 +134,8 @@ intersectRaycast ray object = runMaybeT $ calculateRaycastIntersection ray objec
 
 intersectsRaycast
   :: forall a f p
-   . HasBoundingBox a
+  . HasInverse a
+  => HasAxisAlignedBoundingBox a
   => Foldable f
   => Traversable f
   => HasMatrix p

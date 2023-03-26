@@ -19,6 +19,9 @@ type PlaneGeometryAttrs =
 type LineGeometryAttrs =
   { yspan :: Number }
 
+-- type LineGeometryAttrs =
+--   { points :: Array (Vector3 Number) }
+
 data Geometry
   = BoxGeometry BoxGeometryAttrs
   | SphereGeometry SphereGeometryAttrs
