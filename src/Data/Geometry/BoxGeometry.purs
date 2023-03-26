@@ -5,9 +5,9 @@ import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 import Liminal.Data.Vector8 (Vector8(..))
 import TransformationMatrix.Data.Vector3 (Vector3(..))
-import Liminal.Data.BoundingBox (BoundingBox(..))
-import Liminal.Class.HasVertices (class HasVertices)
-import Liminal.Class.HasBoundingBox (class HasBoundingBox)
+import Liminal.Data.AxisAlignedBoundingBox (AxisAlignedBoundingBox(..))
+import Liminal.Class.HasAxisAlignedVertices (class HasAxisAlignedVertices)
+import Liminal.Class.HasAxisAlignedBoundingBox (class HasAxisAlignedBoundingBox)
 import Liminal.Updates.Data.Geometry as Geometry
 import Liminal.Updates.Class.SerializeGeometry (class SerializeGeometry)
 
@@ -22,43 +22,41 @@ derive instance eqBoxGeometry :: Eq BoxGeometry
 
 derive instance ordBoxGeometry :: Ord BoxGeometry
 
-instance hasVerticesBoxGeometry :: HasVertices BoxGeometry Vector8 where
-  getVertices geometry = calculateVertices geometry (Vector3 0.0 0.0 0.0)
+instance hasAxisAlignedVerticesBoxGeometry :: HasAxisAlignedVertices BoxGeometry Vector8 where
+  getAxisAlignedVertices (BoxGeometry { xspan, yspan, zspan }) = vertices
+    where
+    x = 0.0
+    y = 0.0
+    z = 0.0
+    halfXspan = xspan / 2.0
+    halfYspan = yspan / 2.0
+    halfZspan = zspan / 2.0
+    vertices = Vector8
+      (Vector3 (x - halfXspan) (y + halfYspan) (z + halfZspan))
+      (Vector3 (x + halfXspan) (y + halfYspan) (z + halfZspan))
+      (Vector3 (x - halfXspan) (y - halfYspan) (z + halfZspan))
+      (Vector3 (x + halfXspan) (y - halfYspan) (z + halfZspan))
+      (Vector3 (x - halfXspan) (y + halfYspan) (z - halfZspan))
+      (Vector3 (x + halfXspan) (y + halfYspan) (z - halfZspan))
+      (Vector3 (x - halfXspan) (y - halfYspan) (z - halfZspan))
+      (Vector3 (x + halfXspan) (y - halfYspan) (z - halfZspan))
 
-instance hasBoundingBoxBoxGeometry :: HasBoundingBox BoxGeometry where
-  getBoundingBox geometry = calculateBoundingBox geometry (Vector3 0.0 0.0 0.0)
+instance hasAxisAlignedBoundingBoxBoxGeometry :: HasAxisAlignedBoundingBox BoxGeometry where
+  getAxisAlignedBoundingBox geometry = calculateAxisAlignedBoundingBox geometry 
 
 instance serializeGeometryBoxGeometry :: SerializeGeometry BoxGeometry where
   serializeGeometry (BoxGeometry attrs) = Geometry.BoxGeometry attrs
 
-calculateVertices
+calculateAxisAlignedBoundingBox
   :: BoxGeometry
-  -> Vector3 Number
-  -> Vector8 (Vector3 Number)
-calculateVertices (BoxGeometry { xspan, yspan, zspan }) (Vector3 x y z) = vertices
+  -> AxisAlignedBoundingBox
+calculateAxisAlignedBoundingBox (BoxGeometry { xspan, yspan, zspan }) = AxisAlignedBoundingBox min max
   where
-  halfXspan = xspan / 2.0
-  halfYspan = yspan / 2.0
-  halfZspan = zspan / 2.0
-  vertices = Vector8
-    (Vector3 (x - halfXspan) (y + halfYspan) (z + halfZspan))
-    (Vector3 (x + halfXspan) (y + halfYspan) (z + halfZspan))
-    (Vector3 (x - halfXspan) (y - halfYspan) (z + halfZspan))
-    (Vector3 (x + halfXspan) (y - halfYspan) (z + halfZspan))
-    (Vector3 (x - halfXspan) (y + halfYspan) (z - halfZspan))
-    (Vector3 (x + halfXspan) (y + halfYspan) (z - halfZspan))
-    (Vector3 (x - halfXspan) (y - halfYspan) (z - halfZspan))
-    (Vector3 (x + halfXspan) (y - halfYspan) (z - halfZspan))
-
-calculateBoundingBox
-  :: BoxGeometry
-  -> Vector3 Number
-  -> BoundingBox
-calculateBoundingBox (BoxGeometry { xspan, yspan, zspan }) (Vector3 x y z) = BoundingBox min max
-  where
+  x = 0.0
+  y = 0.0
+  z = 0.0
   halfXspan = xspan / 2.0
   halfYspan = yspan / 2.0
   halfZspan = zspan / 2.0
   min = Vector3 (x - halfXspan) (y - halfYspan) (z - halfZspan)
   max = Vector3 (x + halfXspan) (y + halfYspan) (z + halfZspan)
-

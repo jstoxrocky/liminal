@@ -39,9 +39,3 @@ instance serializeActionAddAction :: (HasUuid a, HasMatrix a, HasGeometry a g, S
 
 instance hasUpdatesAddAction :: (HasUuid a, HasMatrix a, HasGeometry a g, SerializeGeometry g) => HasUpdates (AddAction a) where
   update action = Updates emptyUpdateAttrs { actions = [ serializeAction action ] }
-
--- Philosophy
--- calculateUpdates(state) -> nextState(updates)
---                         -> sideEffect(updates)
-
--- transpose matrix
