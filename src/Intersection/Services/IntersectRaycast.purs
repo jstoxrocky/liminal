@@ -1,6 +1,6 @@
 module Liminal.Intersection.Services.IntersectRaycast where
 
-import Prelude
+import Prelude hiding (add)
 
 import Liminal.Intersection.Data.IntersectionRaycast (IntersectionRaycast(..))
 import Liminal.Intersection.Services.Projection (unproject)
@@ -21,7 +21,7 @@ import Liminal.Class.HasMatrix (class HasMatrix, getPosition)
 import Liminal.Class.HasInverse (class HasInverse, getInverse)
 import Liminal.Class.HasProjection (class HasProjection)
 import TransformationMatrix.Data.Vector2 (Vector2(..))
-import TransformationMatrix.Data.Vector3 (Vector3(..), subtract, normalize)
+import TransformationMatrix.Data.Vector3 (Vector3(..), add, subtract, normalize, multiplyByScalar)
 
 accumulate
   :: forall a
@@ -121,7 +121,9 @@ calculateRaycastIntersection ray object = do
     distance =
       if tmin' >= 0.0 then tmin'
       else tmax'
-  pure $ IntersectionRaycast distance object
+
+    point = add origin (multiplyByScalar distance direction)
+  pure $ IntersectionRaycast distance point object
 
 intersectRaycast
   :: forall a
