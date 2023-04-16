@@ -122,8 +122,8 @@ calculateRaycastIntersection ray object = do
       if tmin' >= 0.0 then tmin'
       else tmax'
 
-    point = add origin (multiplyByScalar distance direction)
-  pure $ IntersectionRaycast distance point object
+    localPosition = add origin (multiplyByScalar distance direction)
+  pure $ IntersectionRaycast { distance, localPosition, object }
 
 intersectRaycast
   :: forall a

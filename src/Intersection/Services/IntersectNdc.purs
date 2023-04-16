@@ -44,13 +44,13 @@ calculateNdcIntersection pointer projector object = do
   let
     objectPosition = getPosition object
     projectorPosition = getPosition projector
-    distanceFromProjectorSquared = distanceBetweenSquared objectPosition projectorPosition
+    distanceSquared = distanceBetweenSquared objectPosition projectorPosition
   positionNdc <- project projector objectPosition
   let
     distanceNdcSquared = vector2DistanceBetweenSquared (pointer) positionNdc
     isHovered = distanceNdcSquared < snappingDistanceSquared
     intersection =
-      if isHovered then Just $ IntersectionNdc distanceNdcSquared distanceFromProjectorSquared object
+      if isHovered then Just $ IntersectionNdc { distanceNdcSquared, distanceSquared, object }
       else Nothing
   pure intersection
 

@@ -4,21 +4,32 @@ import Prelude
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 
-data IntersectionNdc a = IntersectionNdc Number Number a
+data IntersectionNdc a = IntersectionNdc 
+  { distanceNdcSquared :: Number
+  , distanceSquared :: Number
+  , object :: a }
 
 instance functorIntersectionNdc :: Functor IntersectionNdc where
-  map f (IntersectionNdc distanceNdcSquared distanceFromCameraSquared object) = IntersectionNdc distanceNdcSquared distanceFromCameraSquared $ f object
+  map f (IntersectionNdc { distanceNdcSquared, distanceSquared, object }) = IntersectionNdc { distanceNdcSquared, distanceSquared, object: f $ object }
 
 derive instance eqIntersectionNdc :: Eq a => Eq (IntersectionNdc a)
 
 instance ordIntersectionNdc :: Ord a => Ord (IntersectionNdc a) where
-  compare
-    (IntersectionNdc distanceNdcSquared1 distanceFromCameraSquared1 object1)
-    (IntersectionNdc distanceNdcSquared2 distanceFromCameraSquared2 object2) =
+  compare 
+    (IntersectionNdc 
+      { distanceNdcSquared: distanceNdcSquared1
+      , distanceSquared: distanceSquared1
+      , object: object1 }
+    )
+    (IntersectionNdc 
+      { distanceNdcSquared: distanceNdcSquared2
+      , distanceSquared: distanceSquared2
+      , object: object2 }
+    ) =
     if distanceNdcSquared1 < distanceNdcSquared2 then LT
     else if distanceNdcSquared1 == distanceNdcSquared2 then
-      if distanceFromCameraSquared1 < distanceFromCameraSquared2 then LT
-      else if distanceFromCameraSquared1 == distanceFromCameraSquared2 then compare object1 object2
+      if distanceSquared1 < distanceSquared2 then LT
+      else if distanceSquared1 == distanceSquared2 then compare object1 object2
       else GT
     else GT
 
@@ -31,4 +42,5 @@ getNdcHoveredObject
   :: forall a
    . IntersectionNdc a
   -> a
-getNdcHoveredObject (IntersectionNdc _ _ object) = object
+getNdcHoveredObject (IntersectionNdc { object }) = object
+
