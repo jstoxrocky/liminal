@@ -58,8 +58,8 @@ intersectNdcSpec = do
         cameraPosition = getPosition dummyCamera
         measurementOrbNdcPosition = Vector2 0.0 0.0
         distanceNdcSquared = vector2DistanceBetweenSquared pointer measurementOrbNdcPosition
-        distanceFromProjectorSquared = distanceBetweenSquared measurementOrbPosition cameraPosition
-        expectedIntersection = pure $ IntersectionNdc distanceNdcSquared distanceFromProjectorSquared dummyMesh
+        distanceSquared = distanceBetweenSquared measurementOrbPosition cameraPosition
+        expectedIntersection = pure $ IntersectionNdc { distanceNdcSquared, distanceSquared, object: dummyMesh }
 
         -- Test
         maybeIntersection = calculateNdcIntersection pointer dummyCamera dummyMesh
@@ -110,11 +110,11 @@ intersectNdcSpec = do
         -- Both orbs will have the same NDC
         measurementOrbsNdcPosition = Vector2 0.0 0.0
         distanceNdcSquared = vector2DistanceBetweenSquared pointer measurementOrbsNdcPosition
-        distanceFromProjectorSquared1 = distanceBetweenSquared mesh1Position cameraPosition
-        distanceFromProjectorSquared2 = distanceBetweenSquared mesh2Position cameraPosition
+        distanceSquared1 = distanceBetweenSquared mesh1Position cameraPosition
+        distanceSquared2 = distanceBetweenSquared mesh2Position cameraPosition
         -- Sorted by distance from Camera
-        intersectionNdc1 = IntersectionNdc distanceNdcSquared distanceFromProjectorSquared1 mesh1
-        intersectionNdc2 = IntersectionNdc distanceNdcSquared distanceFromProjectorSquared2 mesh2
+        intersectionNdc1 = IntersectionNdc { distanceNdcSquared, distanceSquared: distanceSquared1, object: mesh1 }
+        intersectionNdc2 = IntersectionNdc { distanceNdcSquared, distanceSquared: distanceSquared2, object: mesh2 }
         expectedIntersections =
           [ intersectionNdc2
           , intersectionNdc1
