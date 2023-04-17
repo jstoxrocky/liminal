@@ -27,10 +27,10 @@ derive instance eqIntersectionRaycast :: Eq a => Eq (IntersectionRaycast a)
 
 instance ordIntersectionRaycast :: Ord a => Ord (IntersectionRaycast a) where
   compare
-    (IntersectionRaycast { distance: distance1, object: object1 })
-    (IntersectionRaycast { distance: distance2, object: object2 }) =
+    (IntersectionRaycast { distance: distance1 })
+    (IntersectionRaycast { distance: distance2 }) =
     if distance1 < distance2 then LT
-    else if distance1 == distance2 then compare object1 object2
+    else if distance1 == distance2 then EQ
     else GT
 
 instance hasUuidIntersectionRaycast :: HasUuid a => HasUuid (IntersectionRaycast a) where
