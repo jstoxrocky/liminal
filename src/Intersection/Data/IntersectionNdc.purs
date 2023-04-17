@@ -3,6 +3,10 @@ module Liminal.Intersection.Data.IntersectionNdc where
 import Prelude
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
+import Liminal.Class.HasUuid (class HasUuid, getUuid, setUuid)
+import Liminal.Class.HasMatrix (class HasMatrix, getMatrix, setMatrix, getPosition, setPosition)
+import Liminal.Class.HasInverse (class HasInverse, getInverse, setInverse)
+import Liminal.Class.HasAxisAlignedBoundingBox (class HasAxisAlignedBoundingBox, getAxisAlignedBoundingBox)
 
 data IntersectionNdc a = IntersectionNdc 
   { distanceNdcSquared :: Number
@@ -37,6 +41,23 @@ derive instance genericIntersectionNdc :: Generic (IntersectionNdc a) _
 
 instance showIntersectionNdc :: Show a => Show (IntersectionNdc a) where
   show = genericShow
+
+instance hasUuidIntersectionNdc :: HasUuid a => HasUuid (IntersectionNdc a) where
+  getUuid (IntersectionNdc { object }) = getUuid object
+  setUuid uuid (IntersectionNdc attrs@{ object }) = IntersectionNdc attrs { object = setUuid uuid object }
+
+instance hasMatrixIntersectionNdc :: HasMatrix a => HasMatrix (IntersectionNdc a) where
+  getMatrix (IntersectionNdc { object }) = getMatrix object
+  setMatrix matrix (IntersectionNdc attrs@{ object }) = IntersectionNdc attrs { object = setMatrix matrix object }
+  getPosition (IntersectionNdc { object }) = getPosition object
+  setPosition v3 (IntersectionNdc attrs@{ object }) = IntersectionNdc attrs { object = setPosition v3 object }
+
+instance hasInverseIntersectionNdc :: HasInverse a => HasInverse (IntersectionNdc a) where
+  getInverse (IntersectionNdc { object }) = getInverse object
+  setInverse inverseMatrix (IntersectionNdc attrs@{ object }) = IntersectionNdc attrs { object = setInverse inverseMatrix object }
+
+instance hasAxisAlignedBoundingBoxIntersectionNdc :: HasAxisAlignedBoundingBox a => HasAxisAlignedBoundingBox (IntersectionNdc a) where
+  getAxisAlignedBoundingBox (IntersectionNdc { object }) = getAxisAlignedBoundingBox object
 
 getNdcHoveredObject
   :: forall a
