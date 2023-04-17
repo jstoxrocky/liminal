@@ -17,11 +17,12 @@ import Liminal.Data.AxisAlignedBoundingBox (AxisAlignedBoundingBox(..))
 import Liminal.Data.Ray (Ray(..), applyMatrix4ToRay)
 import Liminal.Class.HasAxisAlignedBoundingBox (class HasAxisAlignedBoundingBox, getAxisAlignedBoundingBox)
 import Liminal.Class.HasInverseProjection (class HasInverseProjection)
-import Liminal.Class.HasMatrix (class HasMatrix, getPosition)
+import Liminal.Class.HasMatrix (class HasMatrix, getPosition, getMatrix)
 import Liminal.Class.HasInverse (class HasInverse, getInverse)
 import Liminal.Class.HasProjection (class HasProjection)
 import TransformationMatrix.Data.Vector2 (Vector2(..))
 import TransformationMatrix.Data.Vector3 (Vector3(..), add, subtract, normalize, multiplyByScalar)
+import TransformationMatrix.Data.Matrix4 (applyMatrix4)
 
 accumulate
   :: forall a
@@ -75,6 +76,7 @@ calculateRaycastIntersection
   :: forall a
   . HasInverse a
   => HasAxisAlignedBoundingBox a
+  => HasMatrix a
   => Ray
   -> a
   -> MaybeT (Either DivisionError) (IntersectionRaycast a)
@@ -123,12 +125,15 @@ calculateRaycastIntersection ray object = do
       else tmax'
 
     localPosition = add origin (multiplyByScalar distance direction)
-  pure $ IntersectionRaycast { distance, localPosition, object }
+    
+  worldPosition <- MaybeT $ Just <$> applyMatrix4 (getMatrix object) localPosition
+  pure $ IntersectionRaycast { distance, worldPosition, object }
 
 intersectRaycast
   :: forall a
   . HasInverse a
   => HasAxisAlignedBoundingBox a
+  => HasMatrix a
   => Ray
   -> a
   -> Either DivisionError (Maybe (IntersectionRaycast a))
@@ -138,6 +143,7 @@ intersectsRaycast
   :: forall a f p
   . HasInverse a
   => HasAxisAlignedBoundingBox a
+  => HasMatrix a
   => Foldable f
   => Traversable f
   => HasMatrix p
