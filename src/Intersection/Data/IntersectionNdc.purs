@@ -22,18 +22,16 @@ instance ordIntersectionNdc :: Ord a => Ord (IntersectionNdc a) where
   compare 
     (IntersectionNdc 
       { distanceNdcSquared: distanceNdcSquared1
-      , distanceSquared: distanceSquared1
-      , object: object1 }
+      , distanceSquared: distanceSquared1 }
     )
     (IntersectionNdc 
       { distanceNdcSquared: distanceNdcSquared2
-      , distanceSquared: distanceSquared2
-      , object: object2 }
+      , distanceSquared: distanceSquared2 }
     ) =
     if distanceNdcSquared1 < distanceNdcSquared2 then LT
     else if distanceNdcSquared1 == distanceNdcSquared2 then
       if distanceSquared1 < distanceSquared2 then LT
-      else if distanceSquared1 == distanceSquared2 then compare object1 object2
+      else if distanceSquared1 == distanceSquared2 then EQ
       else GT
     else GT
 
