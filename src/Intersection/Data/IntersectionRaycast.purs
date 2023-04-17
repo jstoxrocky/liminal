@@ -11,12 +11,12 @@ import Liminal.Class.HasAxisAlignedBoundingBox (class HasAxisAlignedBoundingBox,
 
 data IntersectionRaycast a = IntersectionRaycast 
   { distance :: Number
-  , localPosition :: (Vector3 Number) 
+  , worldPosition :: (Vector3 Number) 
   , object :: a } 
 
 instance functorIntersectionRaycast :: Functor IntersectionRaycast where
-  map f (IntersectionRaycast { distance, localPosition, object }) = IntersectionRaycast 
-    { distance, localPosition, object: f object }
+  map f (IntersectionRaycast { distance, worldPosition, object }) = IntersectionRaycast 
+    { distance, worldPosition, object: f object }
 
 derive instance genericIntersectionRaycast :: Generic (IntersectionRaycast a) _
 
