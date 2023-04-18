@@ -19,21 +19,28 @@ instance functorIntersectionNdc :: Functor IntersectionNdc where
 derive instance eqIntersectionNdc :: Eq a => Eq (IntersectionNdc a)
 
 instance ordIntersectionNdc :: Ord a => Ord (IntersectionNdc a) where
-  compare 
-    (IntersectionNdc 
-      { distanceNdcSquared: distanceNdcSquared1
-      , distanceSquared: distanceSquared1 }
-    )
-    (IntersectionNdc 
-      { distanceNdcSquared: distanceNdcSquared2
-      , distanceSquared: distanceSquared2 }
-    ) =
-    if distanceNdcSquared1 < distanceNdcSquared2 then LT
-    else if distanceNdcSquared1 == distanceNdcSquared2 then
-      if distanceSquared1 < distanceSquared2 then LT
-      else if distanceSquared1 == distanceSquared2 then EQ
-      else GT
+  compare = compareIntersectionNdc
+
+compareIntersectionNdc
+  :: forall a b
+  . IntersectionNdc a
+  -> IntersectionNdc b
+  -> Ordering
+compareIntersectionNdc
+  (IntersectionNdc 
+    { distanceNdcSquared: distanceNdcSquared1
+    , distanceSquared: distanceSquared1 }
+  )
+  (IntersectionNdc 
+    { distanceNdcSquared: distanceNdcSquared2
+    , distanceSquared: distanceSquared2 }
+  ) =
+  if distanceNdcSquared1 < distanceNdcSquared2 then LT
+  else if distanceNdcSquared1 == distanceNdcSquared2 then
+    if distanceSquared1 < distanceSquared2 then LT
+    else if distanceSquared1 == distanceSquared2 then EQ
     else GT
+  else GT
 
 derive instance genericIntersectionNdc :: Generic (IntersectionNdc a) _
 
