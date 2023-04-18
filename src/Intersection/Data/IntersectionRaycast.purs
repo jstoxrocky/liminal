@@ -33,6 +33,18 @@ instance ordIntersectionRaycast :: Ord a => Ord (IntersectionRaycast a) where
     else if distance1 == distance2 then EQ
     else GT
 
+compareIntersectionRaycast
+  :: forall a b
+  . IntersectionRaycast a
+  -> IntersectionRaycast b
+  -> Ordering
+compareIntersectionRaycast
+  (IntersectionRaycast { distance: distance1 })
+  (IntersectionRaycast { distance: distance2 }) =
+  if distance1 < distance2 then LT
+  else if distance1 == distance2 then EQ
+  else GT
+
 instance hasUuidIntersectionRaycast :: HasUuid a => HasUuid (IntersectionRaycast a) where
   getUuid (IntersectionRaycast { object }) = getUuid object
   setUuid uuid (IntersectionRaycast attrs@{ object }) = IntersectionRaycast attrs { object = setUuid uuid object }
