@@ -43,6 +43,7 @@ instance hasInverseMesh :: HasInverse (Mesh a) where
 
 instance hasGeometryMesh :: HasGeometry (Mesh a) a where
   getGeometry (Mesh { geometry }) = geometry
+  setGeometry geometry (Mesh attrs) = Mesh attrs { geometry = geometry } 
 
 instance hasAxisAlignedVerticesMesh :: (Functor b, HasAxisAlignedVertices a b) => HasAxisAlignedVertices (Mesh a) b where
   getAxisAlignedVertices (Mesh { geometry }) = getAxisAlignedVertices geometry
