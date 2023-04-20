@@ -22,7 +22,7 @@ derive instance eqSphereGeometry :: Eq SphereGeometry
 
 derive instance ordSphereGeometry :: Ord SphereGeometry
 
-instance hasAxisAlignedVerticesLineGeometry :: HasAxisAlignedVertices SphereGeometry Vector1 where
+instance hasAxisAlignedVerticesSphereGeometry :: HasAxisAlignedVertices SphereGeometry Vector1 where
   getAxisAlignedVertices _ = Vector1 (Vector3 0.0 0.0 0.0)
 
 instance hasAxisAlignedBoundingBoxSphereGeometry :: HasAxisAlignedBoundingBox SphereGeometry where
