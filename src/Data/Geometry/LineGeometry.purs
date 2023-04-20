@@ -11,7 +11,7 @@ import Liminal.Data.AxisAlignedBoundingBox (AxisAlignedBoundingBox, boundingBoxF
 import Liminal.Updates.Class.SerializeGeometry (class SerializeGeometry)
 import Liminal.Updates.Data.Geometry as Geometry
 import TransformationMatrix.Data.Vector2 (Vector2(..))
-import TransformationMatrix.Data.Vector3 (Vector3)
+import TransformationMatrix.Data.Vector3 (Vector3, toXYZ)
 
 newtype LineGeometry = LineGeometry { point1 :: Vector3 Number, point2 :: Vector3 Number }
 
@@ -31,7 +31,7 @@ instance hasAxisAlignedBoundingBoxLineGeometry :: HasAxisAlignedBoundingBox Line
   getAxisAlignedBoundingBox geometry = calculateAxisAlignedBoundingBox geometry
 
 instance serializeGeometryLineGeometry :: SerializeGeometry LineGeometry where
-  serializeGeometry (LineGeometry attrs) = Geometry.LineGeometry attrs
+  serializeGeometry (LineGeometry { point1, point2 }) = Geometry.LineGeometry { point1: toXYZ point1, point2: toXYZ point2 }
 
 calculateAxisAlignedBoundingBox
   :: LineGeometry
