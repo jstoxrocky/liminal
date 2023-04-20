@@ -79,10 +79,10 @@ pivotNonEmptyAxes nonEmptyVector3s = { x: cons' x xs, y: cons' y ys, z: cons' z 
   Vector3 x y z = head nonEmptyVector3s
   { x: xs, y: ys, z: zs } = pivotAxes (tail nonEmptyVector3s)
 
-boundingBoxFromVertices
+boundingBoxFromPoints
   :: NonEmptyArray (Vector3 Number)
   -> AxisAlignedBoundingBox
-boundingBoxFromVertices vertices = AxisAlignedBoundingBox minVertex maxVertex
+boundingBoxFromPoints vertices = AxisAlignedBoundingBox minVertex maxVertex
   where
   { x, y, z } = pivotNonEmptyAxes vertices
   minX = nonEmptyMin x

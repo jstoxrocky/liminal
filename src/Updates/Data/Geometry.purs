@@ -3,6 +3,7 @@ module Liminal.Updates.Data.Geometry where
 import Prelude
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
+import TransformationMatrix.Data.Vector3 (Vector3)
 
 type BoxGeometryAttrs =
   { xspan :: Number
@@ -17,10 +18,8 @@ type PlaneGeometryAttrs =
   , yspan :: Number }
 
 type LineGeometryAttrs =
-  { yspan :: Number }
-
--- type LineGeometryAttrs =
---   { points :: Array (Vector3 Number) }
+  { point1 :: Vector3 Number
+  , point2 :: Vector3 Number }
 
 data Geometry
   = BoxGeometry BoxGeometryAttrs

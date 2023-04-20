@@ -31,6 +31,10 @@ type UpdateMaterialAttrs =
   , materialUpdater :: MaterialUpdater
   }
 
+type SetFromPointsAttrs =
+  { uuid :: Int
+  , points :: Array { x :: Number, y :: Number, z :: Number } }
+
 data Action
   = TransformCameraAction TransformAttrs
   | ProjectCameraAction ProjectCameraAttrs
@@ -38,6 +42,7 @@ data Action
   | RemoveAction RemoveAttrs
   | TransformAction TransformAttrs
   | MaterialAction UpdateMaterialAttrs
+  | SetFromPointsAction SetFromPointsAttrs
 
 derive instance genericAction :: Generic Action _
 
