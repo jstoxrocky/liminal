@@ -155,5 +155,18 @@ intersectsRaycast
   -> Either DivisionError (Array (IntersectionRaycast a))
 intersectsRaycast pointer projector objects = do
   ray <- pointerToRay projector pointer
+  intersectsRaycastFromRay ray objects
+
+intersectsRaycastFromRay
+  :: forall a f
+  . HasInverse a
+  => HasAxisAlignedBoundingBox a
+  => HasMatrix a
+  => Foldable f
+  => Traversable f
+  => Ray
+  -> f a
+  -> Either DivisionError (Array (IntersectionRaycast a))
+intersectsRaycastFromRay ray objects = do
   intersections <- traverse (intersectRaycast ray) objects
   pure $ foldl accumulate [] intersections
