@@ -8,7 +8,7 @@ import Liminal.Class.HasFieldOfView (class HasFieldOfView)
 import Liminal.Class.HasMatrix (class HasMatrix)
 import Liminal.Class.HasOrbitTarget (class HasOrbitTarget)
 import Liminal.Class.HasProjection (class HasProjection)
-import TransformationMatrix.Data.Matrix4 (Matrix4, getPosition, setPosition)
+import TransformationMatrix.Data.Matrix4 (Matrix4, getPosition, setPosition, getWorldPosition)
 import Liminal.Class.HasUuid (class HasUuid, compareUuid)
 import TransformationMatrix.Data.Vector3 (Vector3)
 import Liminal.Class.HasInverse (class HasInverse)
@@ -43,6 +43,7 @@ instance hasMatrixPerspectiveCamera :: HasMatrix PerspectiveCamera where
   setMatrix matrix (PerspectiveCamera attrs) = PerspectiveCamera attrs { matrix = matrix }
   getPosition (PerspectiveCamera { matrix }) = getPosition matrix
   setPosition v3 (PerspectiveCamera attrs@{ matrix }) = PerspectiveCamera attrs { matrix = setPosition v3 matrix }
+  getWorldPosition (PerspectiveCamera { matrix }) = getWorldPosition matrix
 
 instance hasProjectionPerspectiveCamera :: HasProjection PerspectiveCamera where
   getProjection (PerspectiveCamera { projection }) = projection

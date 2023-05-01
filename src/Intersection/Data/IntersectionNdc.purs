@@ -4,7 +4,7 @@ import Prelude
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 import Liminal.Class.HasUuid (class HasUuid, getUuid, setUuid)
-import Liminal.Class.HasMatrix (class HasMatrix, getMatrix, setMatrix, getPosition, setPosition)
+import Liminal.Class.HasMatrix (class HasMatrix, getMatrix, setMatrix, getPosition, setPosition, getWorldPosition)
 import Liminal.Class.HasInverse (class HasInverse, getInverse, setInverse)
 import Liminal.Class.HasAxisAlignedBoundingBox (class HasAxisAlignedBoundingBox, getAxisAlignedBoundingBox)
 
@@ -56,6 +56,7 @@ instance hasMatrixIntersectionNdc :: HasMatrix a => HasMatrix (IntersectionNdc a
   setMatrix matrix (IntersectionNdc attrs@{ object }) = IntersectionNdc attrs { object = setMatrix matrix object }
   getPosition (IntersectionNdc { object }) = getPosition object
   setPosition v3 (IntersectionNdc attrs@{ object }) = IntersectionNdc attrs { object = setPosition v3 object }
+  getWorldPosition (IntersectionNdc { object }) = getWorldPosition object
 
 instance hasInverseIntersectionNdc :: HasInverse a => HasInverse (IntersectionNdc a) where
   getInverse (IntersectionNdc { object }) = getInverse object

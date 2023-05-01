@@ -5,7 +5,7 @@ import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 import TransformationMatrix.Data.Vector3 (Vector3)
 import Liminal.Class.HasUuid (class HasUuid, getUuid, setUuid)
-import Liminal.Class.HasMatrix (class HasMatrix, getMatrix, setMatrix, getPosition, setPosition)
+import Liminal.Class.HasMatrix (class HasMatrix, getMatrix, setMatrix, getPosition, setPosition, getWorldPosition)
 import Liminal.Class.HasInverse (class HasInverse, getInverse, setInverse)
 import Liminal.Class.HasAxisAlignedBoundingBox (class HasAxisAlignedBoundingBox, getAxisAlignedBoundingBox)
 
@@ -54,6 +54,7 @@ instance hasMatrixIntersectionRaycast :: HasMatrix a => HasMatrix (IntersectionR
   setMatrix matrix (IntersectionRaycast attrs@{ object }) = IntersectionRaycast attrs { object = setMatrix matrix object }
   getPosition (IntersectionRaycast { object }) = getPosition object
   setPosition v3 (IntersectionRaycast attrs@{ object }) = IntersectionRaycast attrs { object = setPosition v3 object }
+  getWorldPosition (IntersectionRaycast { object }) = getWorldPosition object
 
 instance hasInverseIntersectionRaycast :: HasInverse a => HasInverse (IntersectionRaycast a) where
   getInverse (IntersectionRaycast { object }) = getInverse object

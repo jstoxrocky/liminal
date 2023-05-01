@@ -5,7 +5,7 @@ import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 import Liminal.Class.HasUuid (class HasUuid, compareUuid)
 import Liminal.Class.HasMatrix (class HasMatrix)
-import TransformationMatrix.Data.Matrix4 (Matrix4, getPosition, setPosition)
+import TransformationMatrix.Data.Matrix4 (Matrix4, getPosition, setPosition, getWorldPosition)
 import Liminal.Class.HasInverse (class HasInverse)
 import Liminal.Class.HasGeometry (class HasGeometry)
 import Liminal.Class.HasAxisAlignedVertices (class HasAxisAlignedVertices, getAxisAlignedVertices)
@@ -36,6 +36,7 @@ instance hasMatrixMesh :: HasMatrix (Mesh a) where
   setMatrix matrix (Mesh attrs) = Mesh attrs { matrix = matrix }
   getPosition (Mesh { matrix }) = getPosition matrix
   setPosition v3 (Mesh attrs@{ matrix }) = Mesh attrs { matrix = setPosition v3 matrix }
+  getWorldPosition (Mesh { matrix }) = getWorldPosition matrix
 
 instance hasInverseMesh :: HasInverse (Mesh a) where
   getInverse (Mesh { inverseMatrix }) = inverseMatrix
