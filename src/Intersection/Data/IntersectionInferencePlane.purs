@@ -1,4 +1,4 @@
-module Intersection.Data.IntersectionInferencePlane where
+module Liminal.Intersection.Data.IntersectionInferencePlane where
 
 import Prelude
 import TransformationMatrix.Data.Vector3 (Vector3)
