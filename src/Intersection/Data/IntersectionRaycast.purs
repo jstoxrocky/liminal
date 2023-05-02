@@ -26,12 +26,7 @@ instance showIntersectionRaycast :: Show a => Show (IntersectionRaycast a) where
 derive instance eqIntersectionRaycast :: Eq a => Eq (IntersectionRaycast a)
 
 instance ordIntersectionRaycast :: Ord a => Ord (IntersectionRaycast a) where
-  compare
-    (IntersectionRaycast { distance: distance1 })
-    (IntersectionRaycast { distance: distance2 }) =
-    if distance1 < distance2 then LT
-    else if distance1 == distance2 then EQ
-    else GT
+  compare = compareIntersectionRaycast
 
 compareIntersectionRaycast
   :: forall a b
