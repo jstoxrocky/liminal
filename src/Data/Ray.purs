@@ -8,7 +8,7 @@ import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 import Data.Either (Either)
 
-data Ray = Ray (Vector3 Number) (Vector3 Number)
+data Ray = Ray { origin :: Vector3 Number, direction :: Vector3 Number }
 
 derive instance genericRay :: Generic Ray _
 
@@ -19,5 +19,7 @@ applyMatrix4ToRay
   :: Matrix4
   -> Ray
   -> Either DivisionError Ray
-applyMatrix4ToRay matrix (Ray origin direction) = do
-  Ray <$> (applyMatrix4 matrix origin) <*> (transformDirection matrix direction)
+applyMatrix4ToRay matrix (Ray { origin, direction }) = do
+  nextOrigin <- applyMatrix4 matrix origin
+  nextDirection <- transformDirection matrix direction
+  pure $ Ray { origin: nextOrigin, direction: nextDirection }
