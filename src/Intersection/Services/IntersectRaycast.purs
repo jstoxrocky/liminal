@@ -47,7 +47,7 @@ pointerToRay projector (Vector2 x y) = do
     z = 0.5
   unprojected <- unproject projector (Vector3 x y z)
   direction <- normalize (subtract unprojected origin)
-  pure $ Ray origin direction
+  pure $ Ray { origin, direction }
 
 -- T represents the distance along the ray vector before a collision with a bounding plane.
 solveForT
@@ -83,7 +83,7 @@ calculateRaycastIntersection
 calculateRaycastIntersection ray object = do
   axisAlignedRay <- MaybeT $ Just <$> applyMatrix4ToRay (getInverse object) ray
   let
-    Ray origin direction = axisAlignedRay
+    Ray { origin, direction } = axisAlignedRay
     Vector3 originX originY originZ = origin
     Vector3 directionX directionY directionZ = direction
     AxisAlignedBoundingBox
